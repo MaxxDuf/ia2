@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Chat avec Olama</title>
+    <style>
+        body { font-family: Arial; margin: 2rem; }
+        #response { margin-top: 1rem; padding: 1rem; border: 1px solid #ccc; min-height: 50px; }
+    </style>
 </head>
 <body>
     <h1>Chat avec Olama</h1>
-    <input type="text" id="messageInput" placeholder="Écris ton message ici" size="50">
+    <input type="text" id="message" placeholder="Écris ton message..." size="50">
     <button onclick="sendMessage()">Envoyer</button>
-    <div id="response" style="margin-top: 20px; font-weight: bold;"></div>
+    <div id="response"></div>
 
     <script>
-        const serverURL = "https://ia2-u7l2.onrender.com/chat"; // Mets ton URL Render ici
-
         async function sendMessage() {
-            const input = document.getElementById("messageInput").value;
-            if (!input) return;
-
+            const message = document.getElementById("message").value;
             const responseDiv = document.getElementById("response");
-            responseDiv.innerText = "Patiente...";
+            responseDiv.innerHTML = "En cours...";
 
             try {
-                const res = await fetch(`${serverURL}?message=${encodeURIComponent(input)}`);
+                const res = await fetch(`https://ia2-u7l2.onrender.com/chat?message=${encodeURIComponent(message)}`);
+                if (!res.ok) throw new Error("Erreur serveur");
                 const data = await res.json();
-                responseDiv.innerText = data.response;
-            } catch (error) {
-                responseDiv.innerText = "Erreur : impossible de contacter le serveur.";
-                console.error(error);
+                responseDiv.innerHTML = data.response;
+            } catch (err) {
+                responseDiv.innerHTML = "Erreur : impossible de contacter le serveur.";
             }
         }
     </script>
