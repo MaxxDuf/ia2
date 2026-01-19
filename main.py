@@ -4,10 +4,16 @@ from freeflow_llm import FreeFlowClient
 
 app = FastAPI()
 
-# Pour permettre à ton HTML (GitHub Pages ou local) de communiquer avec Render
+# Autoriser ton front-end GitHub Pages
+origins = [
+    "https://maxxduf.github.io",  # ton front-end
+    "http://localhost",           # pour tests locaux
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # ou mets ton URL front-end si tu veux plus de sécurité
+    allow_origins=origins,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
