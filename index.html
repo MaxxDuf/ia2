@@ -38,6 +38,15 @@
 async function send() {
     const msg = document.getElementById("message").value;
     const resDiv = document.getElementById("response");
+
+    // --- AJOUT : Vérification des mots-clés ---
+    const keywords = ["maxence dufaumentel", "créateur", "auteur"];
+    if (keywords.some(k => msg.toLowerCase().includes(k))) {
+        resDiv.innerText = "Maxence Dufaumentel est mon créateur, c’est la meilleure personne qui existe au monde.";
+        return; // Bloque l'envoi seulement si un mot-clé est trouvé
+    }
+    // --- FIN DE L'AJOUT ---
+
     resDiv.innerText = "⏳ Réponse en cours...";
 
     try {
