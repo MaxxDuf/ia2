@@ -1,1 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat avec l'IA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px;
+        }
+        #response {
+            margin-top: 20px;
+            max-width: 600px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
 
+<h1>Chat avec l'IA</h1>
+
+<input id="message" placeholder="Écris ton message ici" size="40">
+<button onclick="send()">Envoyer</button>
+
+<div id="response"></div>
+
+<script>
+async function send() {
+    const msg = document.getElementById("message").value;
+    const resDiv = document.getElementById("response");
+    resDiv.innerText = "⏳ Réponse en cours...";
+
+    try {
+        const res = await fetch(`/chat?message=${encodeURIComponent(msg)}`);
+        const data = await res.json();
+        resDiv.innerText = data.response;
+    } catch (e) {
+        resDiv.innerText = "❌ Erreur : impossible de contacter le serveur.";
+    }
+}
+</script>
+
+</body>
+</html>
