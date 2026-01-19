@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat avec Olama</title>
+</head>
+<body>
+    <h1>Chat avec Olama</h1>
+    <input type="text" id="messageInput" placeholder="Écris ton message ici" size="50">
+    <button onclick="sendMessage()">Envoyer</button>
+    <div id="response" style="margin-top: 20px; font-weight: bold;"></div>
+
+    <script>
+        const serverURL = "https://ia2-u7l2.onrender.com/chat"; // Mets ton URL Render ici
+
+        async function sendMessage() {
+            const input = document.getElementById("messageInput").value;
+            if (!input) return;
+
+            const responseDiv = document.getElementById("response");
+            responseDiv.innerText = "Patiente...";
+
+            try {
+                const res = await fetch(`${serverURL}?message=${encodeURIComponent(input)}`);
+                const data = await res.json();
+                responseDiv.innerText = data.response;
+            } catch (error) {
+                responseDiv.innerText = "Erreur : impossible de contacter le serveur.";
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>
