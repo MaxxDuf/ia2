@@ -47,14 +47,14 @@ async function send() {
     }
     // --- FIN DE L'AJOUT ---
 
-    resDiv.innerText = "⏳ Réponse en cours...";
+    resDiv.innerText = "Chargemnt";
 
     try {
         const res = await fetch(`/chat?message=${encodeURIComponent(msg)}`);
         const data = await res.json();
         resDiv.innerText = data.response;
     } catch (e) {
-        resDiv.innerText = "❌ Erreur : impossible de contacter le serveur.";
+        resDiv.innerText = "conection imposible.";
     }
 }
 </script>
